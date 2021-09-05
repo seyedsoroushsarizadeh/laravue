@@ -1,13 +1,26 @@
 <template>
-<div class="container text-center">
-    <h3>Hello Seyed Soroush Sarizadeh</h3>
-</div>
+    <div class="container">
+        <div class="row">
+            <ul>
+                <li v-for="user in users">{{ user.name }}</li>
+            </ul>
+        </div>
+    </div>
 
 </template>
 
 <script>
 export default {
-    name: "Example"
+    data() {
+        return {
+            users: []
+        }
+    },
+    mounted() {
+        axios.get('/users')
+            .then(response => this.users = response.data)
+            .catch(error => console.log(error))
+    }
 }
 </script>
 

@@ -8,7 +8,6 @@
 </head>
 <body class="antialiased">
 <div id="app">
-    @{{ message }}
     <example></example>
 </div>
 
