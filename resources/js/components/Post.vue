@@ -2,23 +2,22 @@
     <div class="container">
         <div class="row">
             <ul>
-                <li v-for="user in users">{{ user.name }}</li>
+                <li v-for="post in posts">{{ post.title }}</li>
             </ul>
         </div>
     </div>
-
 </template>
 
 <script>
 export default {
     data() {
         return {
-            users: []
+            posts: []
         }
     },
     mounted() {
-        axios.get('/users')
-            .then(response => this.users = response.data)
+        axios.get('/index')
+            .then(response => this.posts = response.data)
             .catch(error => console.log(error))
     }
 }
