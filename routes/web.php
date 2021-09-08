@@ -17,14 +17,11 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/index' , function (){
-    $posts = Post::all();
-    return view('index' , compact('posts'));
-});
-
 Route::prefix('/dashboard')->group(function (){
 
     Route::resource('/user' , UserController::class);
 
     Route::resource('/post' , PostController::class);
+    //show all post
+    Route::get('/getPosts' , [PostController::class, 'getData']);
 });

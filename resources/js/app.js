@@ -1,16 +1,11 @@
 require('./bootstrap');
 
-import Vue from "vue";
+import {Field, Form} from 'vee-validate/dist/vee-validate';
 
-// import PostComponent from './components/Post';
-// Vue.component('post-component' , PostComponent);
+Vue.component('show-post', require('./components/ShowPost').default);
+Vue.component('create-post', require('./components/CreatePost').default);
+Vue.component('edit-post', require('./components/EditPost').default);
 
-import CreatePostComponent from './components/CreatePost';
-Vue.component('create-post' , CreatePostComponent);
-
-Vue = new Vue({
-    el:"#app",
-    data:{
-        title: "Create New Post"
-    }
+new Vue({
+    el: "#app",
 });

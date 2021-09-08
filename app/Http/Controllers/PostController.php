@@ -12,8 +12,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->paginate(5);
-        return view('post.index', compact('posts'));
+        return view('post.index');
+    }
+
+    public function getData()
+    {
+        return response()->json(['posts' => Post::all()]);
     }
 
     /**
@@ -24,11 +28,9 @@ class PostController extends Controller
         return view('post.create');
     }
 
+
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -40,18 +42,15 @@ class PostController extends Controller
 
         Post::create([
             'title' => $request->title,
-            'description' =>  $request->description,
-            'body' =>  $request->body,
+            'description' => $request->description,
+            'body' => $request->body,
         ]);
 
-        echo "soro";
+        return ['message' => 'Created Success'];
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
@@ -60,35 +59,41 @@ class PostController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('post.edit' , compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'body' => 'required',
+        ]);
+
+        $post = Post::find($id);
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->body = $request->body;
+
+        $post->update();
+
+        return ['message' => 'Created Success'];
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        Post::destroy($id);
+        return response()->json('success deleted post');
+
     }
 }
